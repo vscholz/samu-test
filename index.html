@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <title>Login Samu Test</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  </head>
+  <body>
+    <div>redirect_uri: <span id="redirect_uri"></span></div>
+    <div>account_linking_token: <span id="account_linking_token"></span></div>
+    <a href="#" id="login_btn">Login and Return</a>
+
+    <script>
+      $( document ).ready(function() {
+        console.log( "ready!" );
+        var search = location.search.substring(1);
+        search = search?JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g,'":"') + '"}', function(key, value) { return key===""?value:decodeURIComponent(value) }):{};
+
+        var authorization_code = "ABC123";
+
+        console.log(search);
+
+        $('#login_btn').on('click', function () {
+          console.log("redirect to uri");
+          window.location.replace(search.redirect_uri + "&authorization_code=" + authorization_code);
+        });
+
+        $('#redirect_uri').text(search.redirect_uri);
+        $('#account_linking_token').text(search.account_linking_token);
+      });
+    </script>
+  </body>
+</html>
